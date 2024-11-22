@@ -37,14 +37,15 @@ def Dijkstra(g, start = 0, final = 0):
     temp = []
     v = start
     while(v != final):
-        print(f"V={v}")
         for adj in g.adjLists[v]:
-            heappush(temp, Node(adj, marks[v] + g.cost(v, adj)))
+            newMark = marks[v] + g.cost(v, adj)
+            if (newMark < marks[adj]):
+                heappush(temp, Node(adj, newMark))
+                marks[adj] = newMark
+                prev[adj] = v
 
         cst = heappop(temp)
         newv = cst.idx
-        prev[newv] = v
-        marks[newv] = cst.value
         g.constant[newv] = 1
         v = newv
 
